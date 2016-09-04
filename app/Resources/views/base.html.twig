@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <title>Lagon bleu</title>
+</head>
+<body>
+    <ul>
+        <li><a href="/list-of-fish">List of fish</a></li>
+        <li><a href="">Fish Monitoring Reports</a></li>
+        <li><a href="">Coral Monitoring Reports</a></li>
+    </ul>
+    {% block body %}{% endblock %}
+</body>
 </html>
