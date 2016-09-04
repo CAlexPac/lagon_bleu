@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Fishes
+ * Fish
  *
- * @ORM\Table(name="fishes")
+ * @ORM\Table(name="fish")
  * @ORM\Entity
  */
-class Fishes
+class Fish
 {
     /**
      * @var integer
@@ -72,7 +72,7 @@ class Fishes
      *
      * @param string $scientificName
      *
-     * @return Fishes
+     * @return Fish
      */
     public function setScientificName($scientificName)
     {
@@ -96,7 +96,7 @@ class Fishes
      *
      * @param string $englishName
      *
-     * @return Fishes
+     * @return Fish
      */
     public function setEnglishName($englishName)
     {
@@ -120,7 +120,7 @@ class Fishes
      *
      * @param string $frenchName
      *
-     * @return Fishes
+     * @return Fish
      */
     public function setFrenchName($frenchName)
     {
@@ -144,7 +144,7 @@ class Fishes
      *
      * @param string $kreolName
      *
-     * @return Fishes
+     * @return Fish
      */
     public function setKreolName($kreolName)
     {
@@ -168,7 +168,7 @@ class Fishes
      *
      * @param \DateTime $updatedAt
      *
-     * @return Fishes
+     * @return Fish
      */
     public function setUpdatedAt($updatedAt)
     {
