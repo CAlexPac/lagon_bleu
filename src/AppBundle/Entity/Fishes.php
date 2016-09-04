@@ -22,12 +22,39 @@ class Fishes
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="scientific_name", type="string", length=255, nullable=true)
+     */
+    private $scientificName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="english_name", type="string", length=255, nullable=true)
+     */
+    private $englishName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="french_name", type="string", length=255, nullable=true)
+     */
+    private $frenchName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kreol_name", type="string", length=255, nullable=true)
+     */
+    private $kreolName;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     private $updatedAt = 'CURRENT_TIMESTAMP';
-
 
 
     /**
@@ -38,6 +65,102 @@ class Fishes
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set scientificName
+     *
+     * @param string $scientificName
+     *
+     * @return Fishes
+     */
+    public function setScientificName($scientificName)
+    {
+        $this->scientificName = $scientificName;
+
+        return $this;
+    }
+
+    /**
+     * Get scientificName
+     *
+     * @return string
+     */
+    public function getScientificName()
+    {
+        return $this->scientificName;
+    }
+
+    /**
+     * Set englishName
+     *
+     * @param string $englishName
+     *
+     * @return Fishes
+     */
+    public function setEnglishName($englishName)
+    {
+        $this->englishName = $englishName;
+
+        return $this;
+    }
+
+    /**
+     * Get englishName
+     *
+     * @return string
+     */
+    public function getEnglishName()
+    {
+        return $this->englishName;
+    }
+
+    /**
+     * Set frenchName
+     *
+     * @param string $frenchName
+     *
+     * @return Fishes
+     */
+    public function setFrenchName($frenchName)
+    {
+        $this->frenchName = $frenchName;
+
+        return $this;
+    }
+
+    /**
+     * Get frenchName
+     *
+     * @return string
+     */
+    public function getFrenchName()
+    {
+        return $this->frenchName;
+    }
+
+    /**
+     * Set kreolName
+     *
+     * @param string $kreolName
+     *
+     * @return Fishes
+     */
+    public function setKreolName($kreolName)
+    {
+        $this->kreolName = $kreolName;
+
+        return $this;
+    }
+
+    /**
+     * Get kreolName
+     *
+     * @return string
+     */
+    public function getKreolName()
+    {
+        return $this->kreolName;
     }
 
     /**
