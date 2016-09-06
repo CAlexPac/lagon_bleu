@@ -46,7 +46,6 @@ class ListOfFishController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('list-of-fish');
-
         }
 
         return $this->render('list-of-fish/add.html.twig', array(

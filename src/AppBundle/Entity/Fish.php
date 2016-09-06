@@ -3,12 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Fish
  *
  * @ORM\Table(name="fish")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Fish
 {
@@ -25,6 +27,7 @@ class Fish
      * @var string
      *
      * @ORM\Column(name="scientific_name", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
      */
     private $scientificName;
 
@@ -32,6 +35,7 @@ class Fish
      * @var string
      *
      * @ORM\Column(name="english_name", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
      */
     private $englishName;
 
@@ -54,8 +58,15 @@ class Fish
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
+    private $updatedAt;
 
+    /**
+     *  @ORM\PrePersist
+     */
+    public function doStuffOnPrePersist()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 
     /**
      * Get id
