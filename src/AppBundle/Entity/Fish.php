@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="fish")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Fish
 {
@@ -54,8 +55,15 @@ class Fish
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
+    private $updatedAt;
 
+    /**
+     *  @ORM\PrePersist
+     */
+    public function doStuffOnPrePersist()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 
     /**
      * Get id
