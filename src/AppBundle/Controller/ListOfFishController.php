@@ -5,9 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Fish;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\FishType;
 
 class ListOfFishController extends Controller
 {
@@ -17,40 +16,91 @@ class ListOfFishController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('list-of-fish/list.html.twig');
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Fish');
+        $fish       = $repository->findAll();
+
+        return $this->render('list-of-fish/list.html.twig', ['fish' => $fish]);
     }
 
     /**
      * @Route("/list-of-fish/add", name="add-fish")
      */
-    public function newAction(Request $request)
+    public function addAction(Request $request)
     {
         $fish = new Fish();
 
-        $form = $this->createFormBuilder($fish)
-            ->add('scientific_name', TextType::class)
-            ->add('english_name', TextType::class)
-            ->add('french_name', TextType::class)
-            ->add('kreol_name', TextType::class)
-            ->add('save', SubmitType::class, array('label' => 'Save fish'))
-            ->getForm();
-
+        $form = $this->createForm(FishType::class, $fish);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
-
+        if ($form->isSubmitted() && $form->isValid()) {
             $fish = $form->getData();
-            $em = $this->getDoctrine()->getManager();
+            $em   = $this->getDoctrine()->getManager();
             $em->persist($fish);
             $em->flush();
 
             return $this->redirectToRoute('list-of-fish');
         }
 
-        return $this->render('list-of-fish/add.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->render('list-of-fish/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/list-of-fish/edit/{id}", name="edit-fish", requirements={"id":"\d+"})
+     * @param         $id
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction($id, Request $request)
+    {
+        $em   = $this->getDoctrine()->getManager();
+        $fish = $em->getRepository('AppBundle:Fish')->find($id);
+
+        if (!$fish) {
+            throw $this->createNotFoundException(
+                'No fish found for id ' . $id
+            );
+        }
+
+        $form = $this->createForm(FishType::class, $fish);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($fish);
+            $em->flush();
+
+            return $this->redirectToRoute('list-of-fish');
+        }
+
+        return $this->render('list-of-fish/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/list-of-fish/delete/{id}", name="edit-fish", requirements={"id":"\d+"})
+     * @param         $id
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction($id, Request $request)
+    {
+        $em   = $this->getDoctrine()->getManager();
+        $fish = $em->getRepository('AppBundle:Fish')->find($id);
+
+        if (!$fish) {
+            throw $this->createNotFoundException(
+                'No fish found for id ' . $id
+            );
+        }
+
+        $em->remove($fish);
+        $em->flush();
+
+        return $this->redirectToRoute('list-of-fish');
     }
 
 }

@@ -2,4 +2,30 @@
 
 {% block body %}
     <a href="/list-of-fish/add">Add new fish</a>
+    <hr>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Scientific name</th>
+                <th>English name</th>
+                <th>French name</th>
+                <th>Kreol name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in fish %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ f.scientificName }}</td>
+                    <td>{{ f.englishName }}</td>
+                    <td>{{ f.frenchName }}</td>
+                    <td>{{ f.kreolName }}</td>
+                    <td><a href="/list-of-fish/edit/{{ f.id }}">Edit</a> | <a href="/list-of-fish/delete/{{ f.id }}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}
