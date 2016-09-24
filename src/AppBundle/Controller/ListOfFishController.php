@@ -13,6 +13,10 @@ class ListOfFishController extends Controller
 
     /**
      * @Route("/list-of-fish", name="list-of-fish")
+     * 
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
@@ -24,6 +28,10 @@ class ListOfFishController extends Controller
 
     /**
      * @Route("/list-of-fish/add", name="add-fish")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function addAction(Request $request)
     {

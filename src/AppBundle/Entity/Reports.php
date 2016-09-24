@@ -47,7 +47,7 @@ class Reports
      *
      * @ORM\Column(name="cloud_cover", type="integer", nullable=true)
      */
-    private $cloudCover;
+        private $cloudCover;
 
     /**
      * @var string
@@ -99,11 +99,10 @@ class Reports
     private $seaConditions;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="site_id", type="integer", nullable=true)
+     * @ORM\OneToOne(targetEntity="Sites")
+     * @ORM\JoinColumn(name="site_id", referencedColumnName="id")
      */
-    private $siteId;
+    private $site;
 
     /**
      * @var \DateTime
@@ -389,15 +388,15 @@ class Reports
     }
 
     /**
-     * Set siteId
+     * Set site
      *
-     * @param integer $siteId
+     * @param integer $site
      *
      * @return Reports
      */
-    public function setSiteId($siteId)
+    public function setSite($site)
     {
-        $this->siteId = $siteId;
+        $this->site = $site;
 
         return $this;
     }
@@ -407,9 +406,9 @@ class Reports
      *
      * @return integer
      */
-    public function getSiteId()
+    public function getSite()
     {
-        return $this->siteId;
+        return $this->site;
     }
 
     /**

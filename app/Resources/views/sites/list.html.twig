@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="/sites/add">Add new site</a>
+    <hr>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Land mark</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for site in sites %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ site.name }}</td>
+                <td>{{ site.latitude }}</td>
+                <td>{{ site.longitude }}</td>
+                <td>{{ site.landMark }}</td>
+                <td><a href="/sites/edit/{{ site.id }}">Edit</a> | <a href="/sites/delete/{{ sites.id }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
