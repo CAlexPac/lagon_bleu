@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="sites")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Sites
 {
@@ -54,22 +55,16 @@ class Sites
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
-
+    private $updatedAt;
 
     /**
-     * Set id
-     *
-     * @param $id
-     *
-     * @return $this
+     *  @ORM\PrePersist
      */
-    public function setId($id)
+    public function doStuffOnPrePersist()
     {
-        $this->id = $id;
-        return $this;
+        $this->updatedAt = new \DateTime();
     }
-    
+
     /**
      * Get id
      *
