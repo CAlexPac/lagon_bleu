@@ -2,4 +2,29 @@
 
 {% block body %}
     <a href="/fish-reports/create">Create report</a>
+    <hr>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>Site</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for report in reports %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ report.date|date('Y-m-d') }}</td>
+                <td>{{ report.site.name }}</td>
+                <td>{{ report.startTime|date('H:i') }}</td>
+                <td>{{ report.endTime|date('H:i') }}</td>
+                <td><a href="/fish-reports/edit/{{ report.id }}">Edit</a> | <a href="/fish-reports/delete/{{ report.id }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

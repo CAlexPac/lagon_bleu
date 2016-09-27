@@ -13,12 +13,10 @@ class ListOfFishController extends Controller
 
     /**
      * @Route("/list-of-fish", name="list-of-fish")
-     * 
-     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $repository = $this->getDoctrine()->getRepository('AppBundle:Fish');
         $fish       = $repository->findAll();
@@ -56,22 +54,15 @@ class ListOfFishController extends Controller
 
     /**
      * @Route("/list-of-fish/edit/{id}", name="edit-fish", requirements={"id":"\d+"})
-     * @param         $id
+     *
      * @param Request $request
+     * @param Fish    $fish
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($id, Request $request)
+    public function editAction(Request $request, Fish $fish)
     {
         $em   = $this->getDoctrine()->getManager();
-        $fish = $em->getRepository('AppBundle:Fish')->find($id);
-
-        if (!$fish) {
-            throw $this->createNotFoundException(
-                'No fish found for id ' . $id
-            );
-        }
-
         $form = $this->createForm(FishType::class, $fish);
         $form->handleRequest($request);
 
@@ -88,23 +79,15 @@ class ListOfFishController extends Controller
     }
 
     /**
-     * @Route("/list-of-fish/delete/{id}", name="edit-fish", requirements={"id":"\d+"})
-     * @param         $id
-     * @param Request $request
+     * @Route("/list-of-fish/delete/{id}", name="delete-fish", requirements={"id":"\d+"})
+     *
+     * @param Fish $fish
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id, Request $request)
+    public function deleteAction(Fish $fish)
     {
-        $em   = $this->getDoctrine()->getManager();
-        $fish = $em->getRepository('AppBundle:Fish')->find($id);
-
-        if (!$fish) {
-            throw $this->createNotFoundException(
-                'No fish found for id ' . $id
-            );
-        }
-
+        $em = $this->getDoctrine()->getManager();
         $em->remove($fish);
         $em->flush();
 

@@ -3,11 +3,15 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use AppBundle\Entity\Fish;
+use AppBundle\Form\FishCountReportType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -49,9 +53,23 @@ class FishReportType extends AbstractType
                     ],
                 ])
             ->add('site', EntityType::class, [
-                'class' => 'AppBundle:Sites',
-                'choice_label' => 'name'
+                'class'        => 'AppBundle:Sites',
+                'choice_label' => 'name',
             ])
+//            ->add('fishCountReports', CollectionType::class, [
+//                'entry_type' => FishCountReportType::class,
+//                'allow_add' => true,
+//                'allow_delete' => true,
+//                'prototype' => true,
+//                'by_reference' => false,
+//            ])
             ->add('save', SubmitType::class, ['label' => 'Save report']);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => 'AppBundle\Entity\FishReports',
+        ]);
     }
 }

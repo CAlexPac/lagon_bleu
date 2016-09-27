@@ -1,7 +1,8 @@
-{% extends 'base.html.twig' %}
+<form action="{{ path('create-fish-report') }}" method="post">
 
-{% block body %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-{% endblock %}
+    {{form_label(form.date)}}{{form_widget(form.date)}}
+    {{form_label(form.site)}}{{form_widget(form.site)}}
+    {{form_label(form.fishCountReports)}}{{form_widget(form.fishCountReports)}}
+
+
+</form>

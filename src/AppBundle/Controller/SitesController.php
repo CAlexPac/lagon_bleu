@@ -14,11 +14,9 @@ class SitesController extends Controller
     /**
      * @Route("/sites", name="sites")
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $repository = $this->getDoctrine()->getRepository('AppBundle:Sites');
         $sites      = $repository->findAll();
@@ -54,23 +52,16 @@ class SitesController extends Controller
     }
 
     /**
-     * @Route("sites/edit/{id}", name="edit-site", requirements={"id":"\d+"})
+     * @Route("/sites/edit/{id}", name="edit-site", requirements={"id":"\d+"})
      *
-     * @param         $id
      * @param Request $request
+     * @param Sites   $site
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($id, Request $request)
+    public function editAction(Request $request, Sites $site)
     {
-        $em   = $this->getDoctrine()->getManager();
-        $site = $em->getRepository('AppBundle:Sites')->find($id);
-
-        if (!$site) {
-            throw $this->createNotFoundException(
-                'No site found for id ' . $id
-            );
-        }
+        $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(SiteType::class, $site);
         $form->handleRequest($request);
@@ -86,24 +77,15 @@ class SitesController extends Controller
     }
 
     /**
-     * @Route("sites/delete/{id}", name="delete-site", requirements={"is":"\d+"})
+     * @Route("/sites/delete/{id}", name="delete-site", requirements={"id":"\d+"})
      *
-     * @param         $id
-     * @param Request $request
+     * @param Sites $site
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id, Request $request)
+    public function deleteAction(Sites $site)
     {
-        $em   = $this->getDoctrine()->getManager();
-        $site = $em->getRepository('AppBundle:Sites')->find($id);
-
-        if (!$site) {
-            throw $this->createNotFoundException(
-                'No site found for id ' . $id
-            );
-        }
-
+        $em = $this->getDoctrine()->getManager();
         $em->remove($site);
         $em->flush();
 

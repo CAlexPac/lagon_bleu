@@ -3,14 +3,18 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Sites;
+use AppBundle\Entity\FishCountReports;
 
 /**
  * Reports
  *
- * @ORM\Table(name="reports")
+ * @ORM\Table(name="fish_reports")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
-class Reports
+class FishReports
 {
     /**
      * @var integer
@@ -105,13 +109,32 @@ class Reports
     private $site;
 
     /**
+     * @ORM\OneToMany(targetEntity="FishCountReports", mappedBy="FishReports")
+     */
+    private $fishCountReports;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
+    private $updatedAt;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fishCountReports = new ArrayCollection();
+    }
 
+    /**
+     *  @ORM\PrePersist
+     */
+    public function doStuffOnPrePersist()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -128,7 +151,7 @@ class Reports
      *
      * @param \DateTime $date
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setDate($date)
     {
@@ -152,7 +175,7 @@ class Reports
      *
      * @param \DateTime $startTime
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setStartTime($startTime)
     {
@@ -176,7 +199,7 @@ class Reports
      *
      * @param \DateTime $endTime
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setEndTime($endTime)
     {
@@ -200,7 +223,7 @@ class Reports
      *
      * @param integer $cloudCover
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setCloudCover($cloudCover)
     {
@@ -224,7 +247,7 @@ class Reports
      *
      * @param string $visibility
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setVisibility($visibility)
     {
@@ -248,7 +271,7 @@ class Reports
      *
      * @param string $maxDepth
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setMaxDepth($maxDepth)
     {
@@ -272,7 +295,7 @@ class Reports
      *
      * @param string $waterTemperature
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setWaterTemperature($waterTemperature)
     {
@@ -296,7 +319,7 @@ class Reports
      *
      * @param string $current
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setCurrent($current)
     {
@@ -320,7 +343,7 @@ class Reports
      *
      * @param string $wind
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setWind($wind)
     {
@@ -344,7 +367,7 @@ class Reports
      *
      * @param string $tide
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setTide($tide)
     {
@@ -368,7 +391,7 @@ class Reports
      *
      * @param string $seaConditions
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setSeaConditions($seaConditions)
     {
@@ -388,35 +411,11 @@ class Reports
     }
 
     /**
-     * Set site
-     *
-     * @param integer $site
-     *
-     * @return Reports
-     */
-    public function setSite($site)
-    {
-        $this->site = $site;
-
-        return $this;
-    }
-
-    /**
-     * Get siteId
-     *
-     * @return integer
-     */
-    public function getSite()
-    {
-        return $this->site;
-    }
-
-    /**
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
      *
-     * @return Reports
+     * @return FishReports
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -433,5 +432,63 @@ class Reports
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set site
+     *
+     * @param \AppBundle\Entity\Sites $site
+     *
+     * @return FishReports
+     */
+    public function setSite(Sites $site = null)
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    /**
+     * Get site
+     *
+     * @return \AppBundle\Entity\Sites
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * Add fishCountReport
+     *
+     * @param \AppBundle\Entity\FishCountReports $fishCountReport
+     *
+     * @return FishReports
+     */
+    public function addFishCountReport(FishCountReports $fishCountReport)
+    {
+        $this->fishCountReports[] = $fishCountReport;
+
+        return $this;
+    }
+
+    /**
+     * Remove fishCountReport
+     *
+     * @param \AppBundle\Entity\FishCountReports $fishCountReport
+     */
+    public function removeFishCountReport(FishCountReports $fishCountReport)
+    {
+        $this->fishCountReports->removeElement($fishCountReport);
+    }
+
+    /**
+     * Get fishCountReports
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFishCountReports()
+    {
+        return $this->fishCountReports;
     }
 }
